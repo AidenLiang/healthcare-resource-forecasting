@@ -2,6 +2,35 @@
 
 **Master’s computer science project | University of Kansas**
 
+## Machine Learning Pipeline
+Healthcare Historical Data
+          |
+          v
+Data Cleaning & Exploration
+          |
+          v
+Feature Engineering
+          |
+          v
+Feature Selection
+          |
+          v
+Machine Learning Models
+          |
+          v
+RMSE-based Evaluation
+
+## Tech Stack
+
+- Programming: Python
+- Data Processing: pandas, NumPy
+- Machine Learning: scikit-learn
+- Time-series Modeling: statsmodels
+- Deep Learning: TensorFlow/Keras
+- Visualization: Matplotlib, Seaborn
+
+The project investigates healthcare resource forecasting through classical machine learning models and deep learning time-series approaches.
+
 Exploratory machine learning and time-series experiments to study hospital resource utilization, with an emphasis on predicting **`ICU Beds in Use - Total`**. The original project compares multiple forecasting approaches and investigates the effects of weather-related features and other healthcare variables.
 
 > **Project status:** Archived academic experiments. These scripts have been preserved substantially as originally authored; they have **not** been validated as a reproducible end-to-end package or a production forecasting service.
@@ -17,17 +46,41 @@ Exploratory machine learning and time-series experiments to study hospital resou
 
 | Folder | Contents |
 | --- | --- |
-| `Data_Analysis/` | Exploratory analysis, autocorrelation analysis, and feature-selection experiments |
-| `Regression_model_random_split/` | Baseline regression experiments with random train/test splits |
-| `Regression_model_Split by time/` | Regression experiments using chronological splits and feature selection |
-| `Time_Series_model/` | ARIMA, SARIMA, Holt–Winters, EWMA, LSTM, GRU, and other modeling experiments |
-| `With_Weather/` | Weather-augmented datasets, regression experiments, and time-series experiments |
-| `Dataset/` | Included smaller project data files; large raw source data omitted |
-| `Test_dataset/` | Additional data cleaning and experimental utilities |
+| `data_analysis/` | Exploratory data analysis, autocorrelation analysis, and feature-selection experiments |
+| `regression_models/` | Regression experiments under random split and chronological split settings |
+| `time_series_models/` | ARIMA, SARIMA, EWMA, LSTM, GRU and other forecasting models |
+| `external_features/` | Experiments incorporating external variables such as weather-related features |
+| `Dataset/` | Project datasets and intermediate files |
+| `Test_dataset/` | Data cleaning and testing utilities |
 
 The original script names and relative folder layout have been retained to preserve the history of the project. Some scripts expect local data paths and will need path adjustments depending on the working directory.
 
-## Methods
+## Models and Methods
+
+### Classical Machine Learning
+
+- Linear Regression
+- Multiple Linear Regression
+- Ridge Regression
+- LASSO Regression
+- Bayesian Ridge
+- Support Vector Regression
+- Decision Tree
+- Random Forest
+
+
+### Deep Learning
+
+- LSTM
+- GRU
+
+
+### Time-series Models
+
+- ARIMA
+- SARIMA
+- EWMA
+- Dynamic Regression
 
 The project includes experiments with linear and polynomial regression, Ridge, Lasso, Bayesian Ridge, support vector regression, decision trees, random forests, ARIMA/SARIMA, exponential smoothing, LSTM, and GRU. The scripts use Python libraries including pandas, NumPy, scikit-learn, statsmodels, Matplotlib, Seaborn, and Keras/TensorFlow.
 
@@ -49,6 +102,15 @@ The following values were transcribed from the author's project-summary material
 
 The results demonstrate **mixed effects** rather than a universal advantage from adding external features. The table does not establish a single best-performing model across all experimental settings.
 
+## Key Findings
+
+| Experiment | Observation |
+|---|---|
+| Weather features | Improved Random Forest and Decision Tree performance |
+| Feature selection | Reduced Multiple Linear Regression RMSE from 28.33 to 24.73 |
+| Disease-related factors | Improved SVR and GRU performance but not all models |
+| Model comparison | Different models responded differently to external features |
+
 ## Running the archived experiments
 
 1. Create a Python virtual environment and install the libraries listed in `requirements.txt`.
@@ -69,7 +131,7 @@ The approximately 37 MB file `Dataset/COVID-19_Reported_Patient_Impact_and_Hospi
 
 This repository documents an academic research project and has known experimental limitations:
 
-- Some feature-selection scripts appear to select features before the final train/test separation; results may be optimistic due to data leakage.
+- Some earlier experimental scripts may require additional validation to ensure strict separation between feature selection and final evaluation.
 - Some neural time-series scripts fit scalers before splitting data; this can expose information from the test period.
 - A script being located under `With_Weather/` does not necessarily mean weather variables were included in the model's final input tensors.
 - Evaluation protocols and preprocessing are not fully standardized across every experiment; model metrics must not be treated as directly comparable without further review.
