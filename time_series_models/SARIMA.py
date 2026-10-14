@@ -6,7 +6,7 @@ import numpy as np
 from metrics import mean_absolute_percentage_error, symmetric_mean_absolute_percentage_error, mean_absolute_scaled_error
 
 # Load the dataset
-data = pd.read_csv('forecasting_data_cleaned.csv')
+data = pd.read_csv('../enhanced_healthcare_weather_data.csv')
 
 # Assuming 'data' is a pandas DataFrame and the time series is in a column named 'ICU Beds in Use - Total'
 data['Date'] = pd.to_datetime(data['Date'])
@@ -27,8 +27,8 @@ train, test = time_series[:train_size], time_series[train_size:]
 # For example, (1, 1, 1) for ARIMA parameters and (1, 1, 1, 7) for seasonal parameters
 # with a seasonal period of 7 days, if we suspect weekly seasonality.
 model = SARIMAX(train, 
-                order=(0, 0, 0),               # Non-seasonal parameters
-                seasonal_order=(0, 1, 2, 7))   # Seasonal parameters
+                order=(1, 1, 1),               # Non-seasonal parameters
+                seasonal_order=(0, 0, 1, 7))   # Seasonal parameters
 
 # Fit the model
 result = model.fit()
@@ -37,11 +37,13 @@ result = model.fit()
 forecast = result.get_forecast(steps=len(test))
 forecast_series = forecast.predicted_mean
 forecast_conf_int = forecast.conf_int()
-#forecast_index = test.index
+forecast_index = test.index
 
-
-# Set prediction index to test index if needed
-forecast_series.index = test.index
+# Forecast
+forecast = result.get_forecast(steps=len(test))
+forecast_series = forecast.predicted_mean
+forecast_conf_int = forecast.conf_int()
+forecast_index = test.index
 
 # Calculate RMSE, MAPE, sMAPE, MASE
 rmse = np.sqrt(mean_squared_error(test, forecast_series))

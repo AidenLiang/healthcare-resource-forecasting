@@ -5,9 +5,11 @@ from keras.models import Sequential
 from keras.layers import GRU, Dense
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from metrics import mean_absolute_percentage_error, symmetric_mean_absolute_percentage_error, mean_absolute_scaled_error
+from matplotlib import pyplot as plt
+
 
 # Load the dataset
-data = pd.read_csv('forecasting_data_cleaned.csv')
+data = pd.read_csv('../enhanced_healthcare_weather_data.csv')
 data['Date'] = pd.to_datetime(data['Date'])
 data.set_index('Date', inplace=True)
 values = data['ICU Beds in Use - Total'].values.reshape(-1, 1)
@@ -77,3 +79,13 @@ print('Test MAE: %.2f' % (mae_test))
 print('Test MAPE: %.2f' % (mape_test))
 print('Test sMAPE: %.2f' % (smape_test))
 print('Test MASE: %.2f' % (mase_test))
+
+# Testing data and predictions
+plt.plot(np.arange(len(train_y[0]), len(train_y[0]) + len(test_y[0])), test_y[0], label='Test Actual')
+plt.plot(np.arange(len(train_y[0]), len(train_y[0]) + len(test_y[0])), test_predict[:, 0], label='Test Predicted', alpha=0.7)
+
+plt.xlabel('Time Step')
+plt.ylabel('ICU Beds in Use')
+plt.title('Predictions vs. Actuals (LSTM Model)')
+plt.legend()
+plt.show()

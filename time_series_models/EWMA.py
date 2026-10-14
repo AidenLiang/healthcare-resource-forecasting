@@ -7,7 +7,7 @@ from metrics import mean_absolute_percentage_error, symmetric_mean_absolute_perc
 
 
 # Load the dataset
-data = pd.read_csv('forecasting_data_cleaned.csv')
+data = pd.read_csv('../enhanced_healthcare_weather_data.csv')
 
 # Assuming 'data' is a pandas DataFrame and the time series is in a column named 'ICU Beds in Use - Total'
 data['Date'] = pd.to_datetime(data['Date'])
@@ -28,6 +28,9 @@ ewma_model = train.ewm(span=7, adjust=False).mean()
 # This is a common approach for a basic EWMA model, though more sophisticated methods are available
 forecast_series = pd.Series(ewma_model.iloc[-1], index=test.index)
 
+rmse = np.sqrt(mean_squared_error(test, forecast_series))
+print('RMSE:', rmse)
+
 # Calculate MAE
 mae = mean_absolute_error(test, forecast_series)
 print('MAE:', mae)
@@ -44,6 +47,11 @@ print('sMAPE:', smape)
 mase = mean_absolute_scaled_error(test, forecast_series, train)
 print('MASE:', mase)
 
+# R-squared calculation
+ss_res = np.sum((test - forecast_series) ** 2)
+ss_tot = np.sum((test - np.mean(train)) ** 2)
+r_squared = 1 - ss_res / ss_tot
+print('R-squared:', r_squared)
 
 
 

@@ -3,12 +3,10 @@ from statsmodels.tsa.arima.model import ARIMA
 from sklearn.metrics import mean_squared_error
 from matplotlib import pyplot as plt
 import numpy as np
-
-
 from metrics import mean_absolute_percentage_error, symmetric_mean_absolute_percentage_error, mean_absolute_scaled_error
 
 # Load the dataset
-data = pd.read_csv('forecasting_data.csv')
+data = pd.read_csv('../enhanced_healthcare_weather_data.csv')
 
 # Assuming 'data' is a pandas DataFrame and the time series is in a column named 'ICU Beds in Use - Total'
 data['Date'] = pd.to_datetime(data['Date'])
@@ -25,17 +23,7 @@ train_size = int(len(time_series) * 0.8)
 train, test = time_series[:train_size], time_series[train_size:]
 
 # Define the ARIMA model, replace order with appropriate values
-p = 5
-d = 1
-q = 2
-print(p,d,q)
-# from pmdarima import auto_arima
-
-# Running auto_arima
-# model = auto_arima(train, seasonal=False, stepwise=True, trace=True)
-
-
-model = ARIMA(train, order=(p, d, q))  # Non-seasonal parameters
+model = ARIMA(train, order=(1, 1, 1))  # Non-seasonal parameters
 
 # Fit the model
 result = model.fit()
