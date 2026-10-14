@@ -1,0 +1,24 @@
+# System-generated files
+.DS_Store
+__MACOSX/
+._*
+__pycache__/
+*.py[cod]
+# Environments and IDEs
+.venv/
+venv/
+.env
+.env.*
+.idea/
+.vscode/
+# Build and model outputs
+*.h5
+*.keras
+*.pkl
+*.joblib
+.ipynb_checkpoints/
+# Omitted raw dataset
+Dataset/COVID-19_Reported_Patient_Impact_and_Hospital_Capacity_by_State_Timeseries__RAW__20240326.csv
+
+# Exclude CSV datasets from initial upload
+*.csv

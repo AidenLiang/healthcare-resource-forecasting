@@ -1,0 +1,52 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import BayesianRidge
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+
+# Load the cleaned dataset
+data = pd.read_csv('forecasting_data_cleaned.csv')
+
+# Convert date from string to datetime and create new features
+data['Date'] = pd.to_datetime(data['Date'])
+data['Year'] = data['Date'].dt.year
+data['Month'] = data['Date'].dt.month
+data['Day'] = data['Date'].dt.day
+data.drop('Date', axis=1, inplace=True)  # Remove the original Date column
+
+# Select features and target
+target = 'ICU Beds in Use - Total'
+features = data.columns.drop(target)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data[features], data[target], test_size=0.2, random_state=42)
+
+# Initialize and train the Bayesian Ridge Regression model
+model = BayesianRidge()
+model.fit(X_train, y_train)
+
+# Predict on the testing data
+predictions = model.predict(X_test)
+
+# Calculate the RMSE
+rmse = mean_squared_error(y_test, predictions, squared=False)
+print(f'Bayesian Ridge Regression RMSE: {rmse}')
+
+# Scatter plot to compare the actual and predicted values
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, predictions, alpha=0.6)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)
+plt.xlabel('Actual ICU Beds in Use')
+plt.ylabel('Predicted ICU Beds in Use')
+plt.title('Actual vs. Predicted ICU Beds in Use (Bayesian Ridge)')
+plt.show()
+
+# Line plot for the actual and predicted values
+plt.figure(figsize=(10, 6))
+plt.plot(y_test.reset_index(drop=True), label='Actual')
+plt.plot(predictions, label='Predicted', alpha=0.7)
+plt.xlabel('Test Case Index')
+plt.ylabel('ICU Beds in Use')
+plt.title('Actual vs. Predicted ICU Beds in Use Over Test Set (Bayesian Ridge)')
+plt.legend()
+plt.show()

@@ -1,0 +1,8 @@
+# Import-derived dependencies; versions not reproduced or validated
+numpy
+pandas
+scikit-learn
+statsmodels
+matplotlib
+seaborn
+tensorflow
