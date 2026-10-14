@@ -111,6 +111,22 @@ The results demonstrate **mixed effects** rather than a universal advantage from
 | Disease-related factors | Improved SVR and GRU performance but not all models |
 | Model comparison | Different models responded differently to external features |
 
+## Results Visualization
+
+### Weather Feature Impact
+
+![Weather Feature Impact](results/weather_impact.png)
+
+
+### Feature Selection
+
+![Feature Selection](results/feature_selection.png)
+
+
+### Model Performance
+
+![Model Comparison](results/model_comparison.png)
+
 ## Running the archived experiments
 
 1. Create a Python virtual environment and install the libraries listed in `requirements.txt`.
@@ -142,3 +158,4 @@ Future improvements could isolate preprocessing inside training folds, use chron
 ## Purpose
 
 This repository presents the scope and technical work of an academic machine-learning project and provides supporting code for review. It is not intended for clinical decision-making or real-world hospital resource allocation.
+
